@@ -4,7 +4,7 @@
 
 > I don't learn by reading. I learn by building things and seeing them work.
 
-**Current Status**: 🚀 **Project 1 Complete** — 24 more projects to go!
+**Current Status**: 🚀 **Project 2 Complete** — 23 more projects to go!
 
 ---
 
@@ -46,25 +46,42 @@ I had a robot at position 5.0 meters. Two sensors tried to measure it:
 | Simple Average | 5.050 m | 0.110 m | ⚠️ |
 | **Weighted Average** | **4.964 m** | **0.036 m** | **🏆 BEST!** |
 
-**The Magic**: By weighting each sensor by its precision, I got the lowest error. Lower than either sensor alone!
+**The Key Concept**: Inverse variance weighting — trust sensors based on their precision, not equally.
 
-**The Formula**
-```
-weight = 1 / (noise level²)
+---
 
-More noise → lower weight
-Less noise → higher weight
+### **Project 2: Moving Robot with Lying Sensors** ✨
 
-Then blend them together. Done.
-```
+**The New Challenge**
+Now the robot is MOVING! For 60 seconds at 1 m/s (position goes from 0 to 60 meters).
 
-**Why This Matters**
-This one idea (inverse variance weighting) is the foundation of:
-- Kalman Filters (used in Apollo spacecraft)
-- Every self-driving car on the road
-- Drones, robots, navigation systems—everything
+- GPS: Position every 1 second (noisy, ±3.0m)
+- Speedometer: Velocity every 0.1 seconds (noisy, ±0.3 m/s)
 
-And I just built it from scratch in one project.
+**Three Methods I Tried**:
+1. **GPS Only**: Jumpy and unreliable
+2. **Dead Reckoning**: Smooth but accumulates error (drifts by 0.5m)
+3. **Smart Fusion**: Predict with speedometer, correct with GPS
+
+**What I Learned**
+- **Prediction**: Use motion model (speedometer) to forecast smoothly between measurements
+- **Measurement**: Use noisy sensors (GPS) to gently correct drift
+- **Fusion**: Blend them using inverse variance weighting
+- **The Loop**: Predict → Update → Repeat (this is EVERYWHERE in robotics!)
+
+**The Results**
+
+| Method | Final Position | RMSE Error | Rank |
+|--------|----------------|-----------|------|
+| GPS Only | 60.41 m | 3.05 m | ❌ Worst |
+| Dead Reckoning | 60.52 m | 0.28 m | ⚠️ Medium |
+| **Smart Fusion** | **60.33 m** | **0.26 m** | **🏆 BEST** |
+
+**The Magic Moment**: Smart fusion is smooth (like dead reckoning) AND accurate (like GPS), by using the predict-update loop!
+
+**Key Visualizations**:
+- Plot 1: Trajectory comparison (green line true, blue dashed dead reckoning, magenta fusion hugs the line!)
+- Plot 2: RMSE bar chart (fusion bar is shortest!)
 
 ---
 
@@ -76,11 +93,11 @@ And I just built it from scratch in one project.
 | # | Project | Status | My Notes |
 |---|---------|--------|----------|
 | 1 | **The Lying Sensors** | ✅ DONE | Sensor fusion basics—sensor weighting |
-| 2 | **Moving Robot with Lying Sensors** | ⏳ Tomorrow | Prediction vs measurement over time |
-| 3 | **Probability is Just Belief** | 🔒 Coming | Bayes' theorem and distributions |
+| 2 | **Moving Robot with Lying Sensors** | ✅ DONE | Prediction vs measurement—the predict-update loop |
+| 3 | **Probability is Just Belief** | ⏳ Next | Bayes' theorem and distributions |
 | 4 | **The Predict-Update Dance** | 🔒 Coming | THE core pattern all filters use |
 
-**What I'll Understand**: Why sensors fail, how to combine them, the predict-update loop
+**What I'm Learning**: Why sensors fail, how to combine them, the predict-update loop, probability distributions
 
 ---
 
@@ -188,11 +205,11 @@ And I just built it from scratch in one project.
 ## 📊 Progress Tracker
 
 ```
-█████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ 4% Complete
+██████████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ 8% Complete (2 of 25 projects)
 
-Time Invested: ~45 minutes
-Time Remaining: ~31 hours
-Projects Done: 1 / 25
+Time Invested: ~2.5 hours
+Time Remaining: ~29.5 hours
+Projects Done: 2 / 25
 ```
 
 ---
@@ -205,13 +222,19 @@ robotics-learning-bootcamp/
 ├── requirements.txt             ← pip install these
 ├── .gitignore
 │
-└── Project_1/                   ✅ COMPLETE
-    ├── lying_sensors.py         (the code I wrote)
-    ├── Figure_1.png             (scatter plot of sensor readings)
-    ├── Figure_2.png             (RMSE comparison bar chart)
-    └── README.md                (what I learned, detailed)
-
-├── Project_2/ through 25/       🔒 Coming soon
+├── Project_1/                   ✅ COMPLETE
+│   ├── lying_sensors.py
+│   ├── Figure_1.png
+│   ├── Figure_2.png
+│   └── README.md
+│
+├── Project_2/                   ✅ COMPLETE
+│   ├── movingrobot_lyingsensors.py
+│   ├── Figure_1.png
+│   ├── Figure_2.png
+│   └── README.md
+│
+└── Project_3/ through 25/       🔒 Coming soon
 ```
 
 Each project folder has:
@@ -234,23 +257,24 @@ Read each project's README first. Then look at the code. Then modify it and brea
 
 ### **If You're Interviewing Me**
 Each project is a story I can tell:
-- "I built a Kalman filter from scratch that estimates states you never directly measure"
-- "I implemented SLAM so a robot could map while localizing"
-- "I created a multi-sensor fusion system that handles 4 sensors at different rates"
+- "I built sensor fusion from scratch—showing how inverse variance weighting combines imperfect sensors"
+- "I implemented predict-update fusion—predicting with motion models, correcting with measurements"
+- "I created a Kalman filter from scratch that tracks moving objects using both sensors and physics"
 
 ---
 
 ## 🎯 The Learning Curve
 
-### **After Project 1** (today)
-✅ Understand why sensor fusion works  
+### **After Projects 1-2** (today - 2.5 hours)
+✅ Understand sensor fusion fundamentals  
 ✅ Know inverse variance weighting  
-✅ See how to combine imperfect data  
-
-### **After Projects 2-4** (1 week)
 ✅ Understand the predict-update loop  
+✅ See how to combine imperfect data intelligently  
+
+### **After Projects 3-4** (1 week)
+✅ Understand probability distributions  
 ✅ Know Bayes' theorem  
-✅ Recognize this pattern everywhere  
+✅ See the pattern in discrete Bayes filters  
 
 ### **After Projects 5-7** (2 weeks)
 ✅ Implement Kalman filters  
@@ -258,13 +282,13 @@ Each project is a story I can tell:
 ✅ Track objects in real-time  
 
 ### **After Projects 8-14** (4 weeks)
-✅ Multi-sensor fusion  
+✅ Multi-sensor fusion at different rates  
 ✅ EKF for real robot motion  
-✅ Build robust systems  
+✅ Build robust systems that handle failures  
 
 ### **After Projects 15-25** (8 weeks)
 ✅ **FULL ROBOTICS STACK**  
-✅ Autonomous navigation  
+✅ Autonomous navigation systems  
 ✅ Understand every self-driving car algorithm  
 
 ---
@@ -285,7 +309,7 @@ pip install -r requirements.txt
 
 ---
 
-## 🤔 Questions I Started With
+## 🤔 Questions I've Answered So Far
 
 **Project 1 answered:**
 - Why do we need multiple sensors if one is good?
@@ -293,13 +317,19 @@ pip install -r requirements.txt
 - What's inverse variance weighting?
 - Is there a right way to combine data?
 
-**Projects 2-4 will answer:**
-- How do we handle moving targets?
-- What's the predict-update pattern?
-- How do we represent uncertainty?
+**Project 2 answered:**
+- How do we track moving targets?
+- What's the predict-update loop?
+- Why does prediction smooth measurements?
+- How do I prevent dead reckoning drift?
+
+**Projects 3-4 will answer:**
+- How do I represent uncertainty as distributions?
+- What's Bayes' theorem and why does it matter?
+- What happens when I have many timesteps?
 
 **Projects 5-25 will answer:**
-- How does Kalman filtering work?
+- How does Kalman filtering automate all of this?
 - How do robots map environments?
 - How do they plan paths?
 - How do they navigate autonomously?
@@ -312,17 +342,25 @@ Robotics is intimidating. There are so many concepts: Kalman filters, SLAM, path
 
 But they all stack on top of each other. And if I build them one by one, seeing each one work, the whole picture becomes clear.
 
-That's the goal of this repository: **Make robotics less intimidating by building it piece by piece.**
+**Projects 1-2 showed me**: You can fuse sensors and track motion without fancy math. Just blend numbers by precision.
+
+**Projects 3-4 will show me**: The formal math (Bayes' theorem) for what I did intuitively.
+
+**Projects 5-7 will show me**: How Kalman filters automate everything I built by hand.
+
+That's the goal: **Make robotics less intimidating by building it piece by piece.**
 
 ---
 
 ## 🎬 What's Next
 
-**Tomorrow: Project 2 — Moving Robot with Lying Sensors**
+**Project 3: Probability is Just Belief**
 
-I'll extend Project 1 to handle motion. A robot moving at constant velocity, sensors trying to track it, prediction+measurement fusion.
+Instead of just tracking a single position estimate, I'll represent uncertainty as a probability distribution. A histogram over possible positions.
 
-Watch dead reckoning fail. Watch sensor fusion fix it.
+Then I'll apply Bayes' theorem to update that histogram when sensors give me information.
+
+This is where the formal mathematics of robotics begins!
 
 ---
 
@@ -346,6 +384,6 @@ This isn't a textbook. This is a learning journey, documented.
 
 ---
 
-**Next up**: Project 2 🚀
+**Next up**: Project 3 — Probability is Just Belief 🚀
 
 Let's keep building.
