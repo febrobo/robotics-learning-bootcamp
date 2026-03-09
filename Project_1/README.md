@@ -1,4 +1,4 @@
-# The Lying Sensors - My First Robotics Project
+# The Lying Sensors - First Robotics Project
 
 **By Febin** — Learning robotics by building, not reading.
 
